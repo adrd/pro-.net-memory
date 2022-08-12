@@ -8,9 +8,104 @@ namespace CoreCLR.SpanOfT
     {
         static void Main(string[] args)
         {
-            string str = "Hello world!";
-            Span<byte> span = new Span<byte>();
-            Console.WriteLine("Hello World!");
+
+            //UsePointerVariables();
+
+            //UsageOfPointerVariablesInCSharp();
+
+            //PointersAndMethods();
+
+            //PointersAndConversions();
+
+            //PointersAndArray();
+
+            //UseSpan();
+            //UseReadOnlySpan();
+
+
+
+            //string str = "Hello world!";
+            //Span<byte> span = new Span<byte>();
+            //Console.WriteLine("Hello World!");
+        }
+
+
+        public static unsafe void UsePointerVariables()
+        {
+            int x = 100;
+
+            int* ptr = &x; // Declares a pointer variable x, which can hold the address of an int type. 
+                           // The reference operator (&) can be used to get the memory address of a variable.
+                           // The &x gives the memory address of the variable x, which we can assign to a pointer variable 
+
+            Console.WriteLine((int)ptr);  // Displays the memory address  
+            Console.WriteLine(*ptr);      // Displays the value at the memory address. 
+        }
+
+        public static unsafe void UsageOfPointerVariablesInCSharp()
+        {
+            int x = 10;
+            int y = 20;
+
+            int* ptr1 = &x;
+            int* ptr2 = &y;
+            
+            Console.WriteLine((int)ptr1);
+            Console.WriteLine((int)ptr2);
+
+            Console.WriteLine(*ptr1);
+            Console.WriteLine(*ptr2);
+        }
+
+        public static unsafe void PointersAndMethods()
+        {
+            int x = 10;
+            int y = 20;
+
+            int* sum = Swap(&x, &y);
+            
+            Console.WriteLine(*sum);
+        }
+
+        private static unsafe int* Swap(int* x, int* y)
+        {
+            int sum = 0;
+
+            sum = *x + *y;
+            
+            return x;
+        }
+
+        public static unsafe void PointersAndConversions()
+        {
+            char c = 'R';
+            char* pc = &c;
+
+            void* pv = pc;        // Implicit conversion  
+            int* pi = (int*)pv;   // Explicit conversion using casting operator
+        }
+
+        public static unsafe void PointersAndArray()
+        {
+            int[] iArray = new int[10];
+
+            for (int count = 0; count < 10; count++)
+            {
+                iArray[count] = count * count;
+            }
+
+            fixed (int* ptr = iArray)
+                Display(ptr);
+            
+            //Console.WriteLine(*(ptr+2));  
+            //Console.WriteLine((int)ptr);   
+        }
+        private static unsafe void Display(int* pt)
+        {
+            for (int i = 0; i < 14; i++)
+            {
+                Console.WriteLine(*(pt + i));
+            }
         }
 
         ///////////////////////////////////////////////////////////////////////

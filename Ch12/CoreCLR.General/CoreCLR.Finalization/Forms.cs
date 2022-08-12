@@ -76,7 +76,7 @@ namespace CoreCLR.Finalization
 
         public void Show()
         {
-            Console.WriteLine("ChildWindows showed");
+            Console.WriteLine("\nChildWindows showed");
         }
     }
 }

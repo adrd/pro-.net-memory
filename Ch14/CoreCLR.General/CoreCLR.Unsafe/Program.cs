@@ -142,10 +142,10 @@ namespace CoreCLR.UnsafeTests
             #endregion
 
             #region Memory
-            /*
-            MemoryExamples tests = new MemoryExamples();
-            tests.Tests();
-            */
+
+            //MemoryExamples tests = new MemoryExamples();
+            //tests.Tests();
+
             #endregion
 
             #region Unsafe 
@@ -676,26 +676,26 @@ namespace CoreCLR.UnsafeTests
         public void Test()
         {
             Console.ReadLine();
-            for (int i = 0; i < 8224; ++i)
-            {
-                Console.WriteLine($"    public long Field{i};");
-            }
+            //for (int i = 0; i < 8224; ++i)
+            //{
+            //    Console.WriteLine($"    public long Field{i};");
+            //}
             //object obj = new HugeType();
             //StrangeException();
 
             unsafe
             {
                 //int read = *((int*)0x1_0000 + 1);
-                //int read = *((int*)IntPtr.Zero);
+                //int read1 = *((int*)IntPtr.Zero);
             }
-            
+
             TypeLayout.PrintLayout<SomeClass>();
             TypeLayout.PrintLayout<SomeStruct>();
 
             Console.WriteLine(Unsafe.SizeOf<SomeClass>());
             Console.WriteLine(Unsafe.SizeOf<SomeStruct>());
 
-            var local = new SomeClass() {Field1 = 1, Field2 = 2};
+            var local = new SomeClass() { Field1 = 1, Field2 = 2 };
             Dangerous(local);
 
             UnmanagedStruct s1;
@@ -704,7 +704,7 @@ namespace CoreCLR.UnsafeTests
             //VeryDangerous(ref s1);
             Reinterpretation(ref s1);
 
-            UnsafeAndDangerous();
+            //UnsafeAndDangerous();
         }
 
         public unsafe void StrangeException(ref HugeType data)
@@ -927,7 +927,7 @@ namespace CoreCLR.UnsafeTests
             ReadOnlyMemory<char> memory2 = "Hello world".AsMemory();
             //ReadOnlyMemory<char> memory2 = "Hello world".AsMemory(start: 2, length: 3);
 
-            Memory<int> pooledMemory = new Memory<int>(ArrayPool<int>.Shared.Rent(100));
+            //Memory<int> pooledMemory = new Memory<int>(ArrayPool<int>.Shared.Rent(100));
             //await Consume(pooledMemory);
 
             // Memory with explicit owner
@@ -935,7 +935,7 @@ namespace CoreCLR.UnsafeTests
             {
                 Memory<int> memory3 = owner.Memory;
                 Span<int> span = memory3.Span;
-                
+
                 MemoryHandle handle = memory3.Pin(); // Calls owner's Pin
                 handle.Dispose();
             }

@@ -8,6 +8,7 @@ namespace CoreCLR.DependentHandles
         static void Main(string[] args)
         {
             //Leak();
+            //SimpleConditionalWeakTableUsage();
             //SimpleUsage1();
             //SimpleUsage2();
             //SimpleUsage3();
@@ -141,7 +142,8 @@ namespace CoreCLR.DependentHandles
             GC.Collect();
             Console.WriteLine($"{obj1weakRef.IsAlive} {data1weakRef.IsAlive}");
             GC.KeepAlive(obj1);
-            GC.Collect();
+            //GC.Collect();
+            //Console.WriteLine($"{obj1weakRef.IsAlive} {data1weakRef.IsAlive}");
             //GC.WaitForPendingFinalizers();
             //GC.Collect();
             Console.WriteLine($"{obj1weakRef.IsAlive} {data1weakRef.IsAlive}");

@@ -15,10 +15,10 @@ namespace CoreCLR.CollectScenarios
         {
             List<Type> scenarios = new List<Type>()
             {
-                typeof(PinneableObjectCacheUsage),
-                typeof(EagerRootCollection),
+                //typeof(PinneableObjectCacheUsage),
+                //typeof(EagerRootCollection),
                 typeof(VariousRoots),
-                typeof(VariousPinning),
+                //typeof(VariousPinning),
             };
 
             Console.WriteLine("Select scenario: ");

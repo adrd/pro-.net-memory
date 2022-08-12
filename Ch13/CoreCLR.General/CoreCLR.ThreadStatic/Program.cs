@@ -7,26 +7,27 @@ namespace CoreCLR.ThreadStatic
     {
         static void Main(string[] args)
         {
+            // Listing 13-13
             Console.WriteLine("Hello World!");
             SomeClass.UseNamedSlots();
             SomeClass.UseUnnamedSlot();
             //ThreadLocal<string>
             Console.ReadLine();
 
-            /*
-            SomeClass runner = new SomeClass();
-            Thread t1 = new Thread(new ParameterizedThreadStart(runner.Run));
-            t1.Start(1);
-            Thread t2 = new Thread(new ParameterizedThreadStart(runner.Run));
-            t2.Start(2);
-            */
+            // Listings 13-8
+            //SomeClass runner = new SomeClass();
+            //Thread t1 = new Thread(new ParameterizedThreadStart(runner.Run));
+            //t1.Start(1);
+            //Thread t2 = new Thread(new ParameterizedThreadStart(runner.Run));
+            //t2.Start(2);
 
-            SomeOtherClass runner = new SomeOtherClass();
-            Thread t1 = new Thread(runner.Run);
-            t1.Start();
+            // Listings 13-9
+            //SomeOtherClass runner = new SomeOtherClass();
+            //Thread t1 = new Thread(runner.Run);
+            //t1.Start();
             //Console.ReadLine();
-            Thread t2 = new Thread(runner.Run);
-            t2.Start();
+            //Thread t2 = new Thread(runner.Run);
+            //t2.Start();
 
         }
     }
@@ -43,7 +44,7 @@ namespace CoreCLR.ThreadStatic
     {
         [ThreadStatic] private static int threadStaticValueData = 44;
         private ThreadLocal<int> threadValueLocal = new ThreadLocal<int>(() => 44, trackAllValues: true);
-
+        
         [ThreadStatic]
         private static int? threadStaticData;
         public static int ThreadStaticData
@@ -61,9 +62,11 @@ namespace CoreCLR.ThreadStatic
             while (true)
             {
                 Thread.Sleep(1000);
+                //Console.WriteLine($"Worker {threadStaticValueData}.");
+                //Console.WriteLine($"Worker {threadStaticValueData}:{threadValueLocal.Value}.");
                 Console.WriteLine($"Worker {threadStaticValueData}:{threadValueLocal.Value}:{ThreadStaticData}.");
                 Console.WriteLine(threadValueLocal.Values.Count);
-                threadValueLocal.Value = threadValueLocal.Value + 1;
+                threadValueLocal.Value = threadValueLocal.Value + 1; // be aware it's a little bit dangerous
             }
         }
     }
@@ -73,6 +76,11 @@ namespace CoreCLR.ThreadStatic
     class SomeData
     {
         public int Field;
+
+        //public override string ToString()
+        //{
+        //    return this.Field.ToString();
+        //}
     }
 
     class SomeClass
@@ -106,6 +114,7 @@ namespace CoreCLR.ThreadStatic
 
             object data = Thread.GetData(Thread.GetNamedDataSlot("SlotName"));
             Console.WriteLine(data);
+            //Console.WriteLine(((SomeData)data));
             Thread.FreeNamedDataSlot("SlotName");
         }
 

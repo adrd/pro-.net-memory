@@ -27,6 +27,7 @@ namespace CoreCLR.Finalization
             //Console.WriteLine(pf.UseMe());
 
             //var pfw = new ProblematicFileWrapper(@"C:\temp.txt");
+            //Console.WriteLine(pfw.UseMe());
 
             //CustomFileSafeHandle f2 = new CustomFileSafeHandle(@"C:\Notes.md");
 
@@ -95,58 +96,58 @@ namespace CoreCLR.Finalization
             #endregion
 
             #region Weak references experiments
-            /*
-            {
-                // Listing 12-35
-                var obj = new LargeClass(ressurect: true);
-                GCHandle weakHandle = GCHandle.Alloc(obj, GCHandleType.Weak);
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                GC.Collect();
-                Console.WriteLine(weakHandle.Target ?? "<null>"); // prints <null>
-            }
 
-            {
-                // Listing 12-36
-                var obj = new LargeClass(ressurect: true);
-                GCHandle weakHandle = GCHandle.Alloc(obj, GCHandleType.WeakTrackResurrection);
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                GC.Collect();
-                Console.WriteLine(weakHandle.Target ?? "<null>"); // prints CoreCLR.Finalization.LargeClass
-            }
+            //{
+            //    // Listing 12-35
+            //    var obj = new LargeClass(ressurect: true);
+            //    GCHandle weakHandle = GCHandle.Alloc(obj, GCHandleType.Weak);
+            //    GC.Collect();
+            //    GC.WaitForPendingFinalizers();
+            //    GC.Collect();
+            //    Console.WriteLine(weakHandle.Target ?? "<null>"); // prints <null>
+            //}
 
-            {
-                var obj = new LargeClass(ressurect: true);
-                WeakReference weakReference = new WeakReference(obj, trackResurrection: false);
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                GC.Collect();
-                Console.WriteLine(weakReference.Target ?? "<null>"); // prints <null>
-            }
+            //{
+            //    // Listing 12-36
+            //    var obj = new LargeClass(ressurect: true);
+            //    GCHandle weakHandle = GCHandle.Alloc(obj, GCHandleType.WeakTrackResurrection);
+            //    GC.Collect();
+            //    GC.WaitForPendingFinalizers();
+            //    GC.Collect();
+            //    Console.WriteLine(weakHandle.Target ?? "<null>"); // prints CoreCLR.Finalization.LargeClass
+            //}
 
-            {
-                // Listing 12-38
-                var obj = new LargeClass(ressurect: true);
-                WeakReference weakReference = new WeakReference(obj, trackResurrection: false);
-                if (weakReference.IsAlive)
-                    Console.WriteLine(weakReference.Target ?? "<null>");
-            }
+            //{
+            //    var obj = new LargeClass(ressurect: true);
+            //    WeakReference weakReference = new WeakReference(obj, trackResurrection: false);
+            //    GC.Collect();
+            //    GC.WaitForPendingFinalizers();
+            //    GC.Collect();
+            //    Console.WriteLine(weakReference.Target ?? "<null>"); // prints <null>
+            //}
 
-            {
-                // Listing 12-39
-                var obj = new LargeClass(ressurect: true);
-                WeakReference<LargeClass> weakReference = new WeakReference<LargeClass>(obj, trackResurrection: false);
-                if (weakReference.TryGetTarget(out var target))
-                    Console.WriteLine(target);
-            }*/
+            //{
+            //    // Listing 12-38
+            //    var obj = new LargeClass(ressurect: true);
+            //    WeakReference weakReference = new WeakReference(obj, trackResurrection: false);
+            //    if (weakReference.IsAlive)
+            //        Console.WriteLine(weakReference.Target ?? "<null>");
+            //}
+
+            //{
+            //    // Listing 12-39
+            //    var obj = new LargeClass(ressurect: true);
+            //    WeakReference<LargeClass> weakReference = new WeakReference<LargeClass>(obj, trackResurrection: false);
+            //    if (weakReference.TryGetTarget(out var target))
+            //        Console.WriteLine(target);
+            //}
             #endregion
 
             #region Weak event pattern
-            /*
-            Application app = new Application();
-            app.Run();
-            */
+
+            //Application app = new Application();
+            //app.Run();
+
             #endregion
 
             #region Struct finalizer
@@ -165,8 +166,10 @@ namespace CoreCLR.Finalization
             #endregion
 
             #region Finalization starving
-            LeakyApplication app = new LeakyApplication();
-            app.Run();
+
+            //Console.WriteLine("Finalization starving");
+            //LeakyApplication app = new LeakyApplication();
+            //app.Run();
             #endregion
 
             Console.ReadLine();
@@ -353,7 +356,7 @@ namespace CoreCLR.Finalization
 
             byte[] buffer = new byte[1];
             if (Unmanaged.ReadFile(new HandleRef(this, hnd), buffer, 1, out uint read, IntPtr.Zero))    // to solve exception
-                //if (Unmanaged.ReadFile(hnd, buffer, 1, out uint read, IntPtr.Zero))
+              //if (Unmanaged.ReadFile(hnd, buffer, 1, out uint read, IntPtr.Zero))
             {
                 return buffer[0];
             }

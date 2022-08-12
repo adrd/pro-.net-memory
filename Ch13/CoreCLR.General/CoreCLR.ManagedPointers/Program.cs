@@ -11,10 +11,14 @@ namespace CoreCLR.ManagedPointers
         public static void Main(string[] args)
         {
             var sc = new SomeClass();
-            Console.WriteLine(sc.Process(10));
-            var x = typeof(SomeClass).GetMethod("Process", BindingFlags.Instance | BindingFlags.Public);
-            Console.WriteLine("{0:X16}", GetAddressOf(sc));
-            Console.WriteLine("{0:X16}", AddressByPin(sc));
+
+            // Listing 13-21 and Listing 13-22
+            Program.UsingRefLocal(sc);
+
+            //Console.WriteLine(sc.Process(10));
+            //var x = typeof(SomeClass).GetMethod("Process", BindingFlags.Instance | BindingFlags.Public);
+            //Console.WriteLine("{0:X16}", GetAddressOf(sc));
+            //Console.WriteLine("{0:X16}", AddressByPin(sc));
             Console.ReadKey();
         }
 
@@ -24,6 +28,23 @@ namespace CoreCLR.ManagedPointers
         {
             ref int refLocal = ref data.Field;
             refLocal = 2;
+
+            SomeClass local = null;
+            ref SomeClass localRef = ref local;
+        }
+
+        // Listing 13-24
+        //public static ref int ReturnByRefValueTypeInterior(int index)
+        //{
+        //    int localInt = 7;
+
+        //    return ref localInt; // Compilation error: Cannot return local 'localInt' by reference because it is not a ref local
+        //}
+
+        // Listing 13-25
+        public static ref int GetArrayElementByRef(int[] array, int index)
+        {
+            return ref array[index];
         }
 
         public static void Inc(TypedReference value)

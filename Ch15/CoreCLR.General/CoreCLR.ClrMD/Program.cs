@@ -10,8 +10,9 @@ namespace CoreCLR.ClrMD
     {
         static void Main(string[] args)
         {
-            int pid = 25668; //Process.GetCurrentProcess().Id;
-
+            //int pid = 25668; //Process.GetCurrentProcess().Id;
+            int pid = 5084; //Process.GetCurrentProcess().Id;
+           
             // Listing 15-26
             // DataTarget target = DataTarget.LoadCrashDump(@"c:\work\crash.dmp")
             using (DataTarget target = DataTarget.AttachToProcess(pid, 5000, AttachFlag.Invasive))

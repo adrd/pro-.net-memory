@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
@@ -18,53 +19,56 @@ namespace CoreCLR.UnsafeTests
             //Span<int> x = stackalloc[] { 1, 2, 3 };
             //Console.WriteLine(x[0]);
 
-            //SomeStruct someStruct = new SomeStruct();
-            //SomeClass someClass = new SomeClass();
+
 
 
             //MovableFixedBuffers testFixedBuffers = new MovableFixedBuffers();
             //testFixedBuffers.Test();
 
+            //SomeStruct someStruct = new SomeStruct();
+            //SomeClass someClass = new SomeClass();
+
             //PassingByref.ByRefReferenceType(ref someClass);
             //PassingByref.ByRefValueType(ref someStruct);
-            //PassingByref.ByRefInterior(ref someClass.Field);
+            ////PassingByref.ByRefInterior(ref someClass.Field);
             //Console.WriteLine(someClass.Field);
             //Console.WriteLine(someStruct.Field);
 
             #region Unmanaged constraint
-            /*
-            ConstraintTests tests = new ConstraintTests();
-            tests.Test();
-            */
+
+            //ConstraintTests tests = new ConstraintTests();
+            //tests.Test();
+
             #endregion
 
             #region Observing returned interior pointer
-            /*
-            ref int byRef = ref PassingByref.ObservableReturnByRefReferenceTypeInterior(2, out WeakReference wr);
-            byRef = 4;
-            for (int i = 0; i < 3; ++i)
-            {
-                GC.Collect();
-                Console.WriteLine(byRef + " " + wr.IsAlive);
-                //Console.ReadLine();
-            }
-            GC.Collect();
-            Console.WriteLine(wr.IsAlive);
-            */
+
+            //ref int byRef = ref PassingByref.ObservableReturnByRefReferenceTypeInterior(2, out WeakReference wr);
+            //byRef = 4;
+            //for (int i = 0; i < 3; ++i)
+            //{
+            //    GC.Collect();
+            //    Console.WriteLine(byRef + " " + wr.IsAlive);
+            //    //Console.ReadLine();
+            //}
+            //GC.Collect();
+            //Console.WriteLine(wr.IsAlive);
+
             #endregion
+
             //Console.WriteLine(PassingByref.UsingRefLocal(30));
             #region Return by ref
             // Listing 13-26
-            /*
-            int[] array = {1, 2, 3};
-            ref int arrElementRef = ref PassingByref.GetArrayElementByRef(array, 0);
-            arrElementRef = 4;
-            Console.WriteLine(string.Join("", array));
 
-            int arrElementVal = PassingByref.GetArrayElementByRef(array, 0);
-            arrElementVal = 5;
-            Console.WriteLine(string.Join("", array));
-            */
+            //int[] array = { 1, 2, 3 };
+            //ref int arrElementRef = ref PassingByref.GetArrayElementByRef(array, 0);
+            //arrElementRef = 4;
+            //Console.WriteLine(string.Join("", array)); // 423
+
+            //int arrElementVal = PassingByref.GetArrayElementByRef(array, 0);
+            //arrElementVal = 5;
+            //Console.WriteLine(string.Join("", array)); // 423
+
             #endregion
 
             #region Interior fun
@@ -82,78 +86,92 @@ namespace CoreCLR.UnsafeTests
 
             #region Readonly refs
             // Listing 13-27
-            /*
-            var collection = new BookCollection();
-            ref readonly var book = ref collection.GetBookByTitle("Call of the Wild, The");
-            //if (book != null)
-            {
-                //book = new Book();
-                //book.Title = "Call of the Wild, The";
-                //book.Author = "Ja";
-                book.ModifyAuthor();
-                Console.WriteLine(book.Author);
-                Console.WriteLine(collection.GetBookByTitle("Call of the Wild, The").Author);
-            }
-            */
+
+            //var collection = new BookCollection();
+            //ref readonly var book = ref collection.GetBookByTitle("Call of the Wild, The");
+            ////if (book != null)
+            //{
+            //    //book = new Book();
+            //    //book.Title = "Call of the Wild, The";
+            //    //book.Author = "Ja";
+            //    book.ModifyAuthor();
+            //    Console.WriteLine(book.Author);
+            //    Console.WriteLine(collection.GetBookByTitle("Call of the Wild, The").Author);
+            //}
+
+            // Listing 13-60
+            //var coll = new ReadOnlyBookCollection();
+            //ref readonly var book = ref coll.GetBookByTitle("Call of the Wild, The");
+            ////book.Author = "XXX"; // Compiler error: A readonly field cannot be assigned to (except in a constructor or a variable initializer)
+
             #endregion
 
             #region In structs
-            /*
-            var book = new Book() { Author = "Konrad Kokosa", Title = "Pro .NET Memory Management" };
-            var collection = new BookCollection();
-            collection.CheckBook(in book);
-            Console.WriteLine(book.Author);
-            */
+
+            //Book book = new Book() { Author = "Konrad Kokosa", Title = "Pro .NET Memory Management" };
+            //BookCollection collection = new BookCollection();
+            //collection.CheckBook(in book);
+            //Console.WriteLine(book.Author);
+
             #endregion
 
             #region Ref returning collections
 
-            /*
-            SomeStructRefList refList = new SomeStructRefList(10);
-            for (var i = 0; i < 10; ++i)
-                refList[i].Field = i; 
-                //refList[i].ModifyMe();
-            for (var i = 0; i < 10; ++i)
-                Console.WriteLine(refList[i].Field);
+            //SomeStructRefList refList = new SomeStructRefList(10);
+            //for (var i = 0; i < 10; ++i)
+            //    refList[i].Field = i;
+            ////refList[i].ModifyMe();
+            //for (var i = 0; i < 10; ++i)
+            //    Console.WriteLine(refList[i].Field); // prints 0123456789 otherwise 11 nine times
 
-            SomeStructReadOnlyRefList readOnlyRefList = new SomeStructReadOnlyRefList(10);
-            for (var i = 0; i < 10; ++i)
-                //readOnlyRefList[i].Field = i; // Error CS8332: Cannot assign to a member of property 'SomeStructRefList.this[int]' because it is a readonly variable
-                readOnlyRefList[i].ModifyMe();
-            for (var i = 0; i < 10; ++i)
-                Console.WriteLine(readOnlyRefList[i].Field);
-            */
+            //SomeStructReadOnlyRefList readOnlyRefList = new SomeStructReadOnlyRefList(10);
+            //for (var i = 0; i < 10; ++i)
+            //    //readOnlyRefList[i].Field = i; // Error CS8332: Cannot assign to a member of property 'SomeStructRefList.this[int]' because it is a readonly variable
+            //    readOnlyRefList[i].ModifyMe();
+            //for (var i = 0; i < 10; ++i)
+            //    Console.WriteLine(readOnlyRefList[i].Field); // prints 0000000000
+
             #endregion
 
             #region Readonly struct
 
-            //ReadonlyBook book = new ReadonlyBook(Author = "Konrad Kokosa" };
+            //ReadonlyBook book = new ReadonlyBook() { Author = "Konrad Kokosa" };
 
             #endregion
 
             #region Fixed size buffers
-            /*
-            List<StructWithFixedArray> list = new List<StructWithFixedArray>();
-            list.Add(new StructWithFixedArray());
-            */
+
+
+            //List<StructWithFixedArray> list = new List<StructWithFixedArray>();
+            //list.Add(new StructWithFixedArray());
+
+
             #endregion
 
             #region Span
+
             //SpanExamples tests = new SpanExamples();
             //tests.UseSpanWisely(24);
+
             #endregion
 
             #region Memory
+
             /*
             MemoryExamples tests = new MemoryExamples();
             tests.Tests();
             */
+
             #endregion
 
-            #region Unsafe 
-            UnsafeTests tests = new UnsafeTests();
-            tests.Test();
+            #region Unsafe
+
+            //UnsafeTests tests = new UnsafeTests();
+            //tests.Test();
+
             #endregion
+
+            
 
             //Console.ReadLine();
         }
@@ -293,7 +311,7 @@ namespace CoreCLR.UnsafeTests
         public void Test()
         {
             RefBook localBook = new RefBook();
-            //object box = (object) localBook;
+            //object box = (object)localBook;
             //RefBook[] array = new RefBook[4];
             //using (var refStruct = new DisposableRefStruct())
             //{
@@ -1262,7 +1280,9 @@ namespace CoreCLR.UnsafeTests
             new Book { Title = "Call of the Wild, The", Author = "Jack London" },
             new Book { Title = "Tale of Two Cities, A", Author = "Charles Dickens" }
         };
+
         private Book nobook = default;
+        
         public ref readonly Book GetBookByTitle(string title)
         {
             for (int ctr = 0; ctr < books.Length; ctr++)
@@ -1290,7 +1310,9 @@ namespace CoreCLR.UnsafeTests
             new ReadonlyBook("Call of the Wild, The", "Jack London" ),
             new ReadonlyBook("Tale of Two Cities, A", "Charles Dickens")
         };
+
         private ReadonlyBook nobook = default;
+        
         public ref readonly ReadonlyBook GetBookByTitle(string title)
         {
             for (int ctr = 0; ctr < books.Length; ctr++)

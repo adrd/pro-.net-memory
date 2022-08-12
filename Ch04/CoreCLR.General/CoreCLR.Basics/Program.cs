@@ -27,7 +27,8 @@ namespace CoreCLR.Basics
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello World!"); 
+            Console.ReadLine();
         }
     }
 }

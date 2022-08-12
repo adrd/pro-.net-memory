@@ -7,7 +7,7 @@ namespace CoreCLR.EagerRootCollection
     {
         ///////////////////////////////////////////////////////////////////////
         // Listings 8-12, 8-16
-        static void Main2(string[] args)
+        static void Main(string[] args)
         {
             Timer t = new Timer((obj) => Console.WriteLine(DateTime.Now.ToString()), null, 0, 100);
             Console.WriteLine("Hello World!");
@@ -18,7 +18,7 @@ namespace CoreCLR.EagerRootCollection
 
         ///////////////////////////////////////////////////////////////////////
         // Listing 8-13
-        static void Main1(string[] args)
+        static void Main2(string[] args)
         {
             SomeClass sc = new SomeClass();
             sc.DoSomething("Hello world!");
@@ -27,10 +27,10 @@ namespace CoreCLR.EagerRootCollection
 
         ///////////////////////////////////////////////////////////////////////
         // Listing 8-14
-        static void Main(string[] args)
+        static void Main1(string[] args)
         {
             SomeClass sc = new SomeClass() {Field = new Random().Next()};
-            sc.DoSomething("Number: ");
+            sc.DoSomethingElse();
             Console.ReadKey();
         }
     }
@@ -49,6 +49,7 @@ namespace CoreCLR.EagerRootCollection
         public void DoSomethingElse()
         {
             Console.WriteLine(this.Field.ToString());
+            Console.WriteLine("Am I dead?");
         }
 
         ~SomeClass()

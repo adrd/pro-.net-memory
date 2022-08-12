@@ -1,4 +1,4 @@
-﻿//#define STRUCTS
+﻿///#define STRUCTS
 //#define STRUCTS_BY_REF
 #define CLASS_BY_REF
 using System;

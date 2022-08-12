@@ -13,26 +13,26 @@ namespace CoreCLR.DataOrientedDesign
     {
         static void Main(string[] args)
         {
-            //TypeLayout.PrintLayout<OOP.Customer>();
-            //TypeLayout.PrintLayout<DOD.CustomerValue>();
+            TypeLayout.PrintLayout<OOP.Customer>();
+            TypeLayout.PrintLayout<DOD.CustomerValue>();
 
-            OOP.Node root = new Node(3);
-            root.AddChild(new Node(4));
-            OOP.Node right = new Node(5);
-            right.AddChild(new Node(6));
-            root.AddChild(right);
-            root.Process();
+            //OOP.Node root = new Node(3);
+            //root.AddChild(new Node(4));
+            //OOP.Node right = new Node(5);
+            //right.AddChild(new Node(6));
+            //root.AddChild(right);
+            //root.Process();
 
-            DOD.Tree tree = new Tree(root);
-            tree.Process();
+            //DOD.Tree tree = new Tree(root);
+            //tree.Process();
 
             ECS.Manager manager = new Manager();
             manager.RegisterSystem(new MoveSystem());
             manager.RegisterSystem(new RenderingSystem());
 
             ECS.Entity entity = manager.CreateEntity();
-            var startPosition = new PositionComponent() {X = 0.0, Y = 0.0};
-            var initialMovement = new MovableComponent() {Direction = 0.0, Speed = 1.0};
+            var startPosition = new PositionComponent() { X = 0.0, Y = 0.0 };
+            var initialMovement = new MovableComponent() { Direction = 0.0, Speed = 1.0 };
             ComponentManager<PositionComponent>.Register(in entity, in startPosition);
             ComponentManager<MovableComponent>.Register(in entity, in initialMovement);
 
@@ -199,7 +199,7 @@ namespace ECS
         public Entity CreateEntity()
         {
             var entity = new Entity(entities.Count);
-            entities.Add(entity); // Boxed but that's ok
+            entities.Add(entity); // Boxed but that's ok ???
             return entity;
         }
 
@@ -373,4 +373,6 @@ namespace DOD
     public class AuxiliaryData
     {
     }
+
+    
 }

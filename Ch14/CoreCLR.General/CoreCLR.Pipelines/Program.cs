@@ -24,7 +24,7 @@ namespace CoreCLR.Pipelines
         // Listing 14-71
         static async Task SynchronousUsage(Pipe pipe)
         {
-            pipe.Writer.Write(new byte[] { 1, 2, 3 }.AsReadOnlySpan());
+            pipe.Writer.Write(new byte[] { 1, 2, 3 });
             await pipe.Writer.FlushAsync();
 
             var result = await pipe.Reader.ReadAsync();
@@ -55,7 +55,7 @@ namespace CoreCLR.Pipelines
         // Listing 14-73
         static async Task AsynchronousGetMemoryUsage(Pipe pipe)
         {
-            Memory<byte> memory = pipe.Writer.GetMemory(minimumLength: 2);
+            Memory<byte> memory = pipe.Writer.GetMemory(2);
             memory.Span[0] = 1;
             memory.Span[1] = 2;
             Console.WriteLine(memory.Length);
@@ -85,14 +85,14 @@ namespace CoreCLR.Pipelines
             var readBuffer = readResult.Buffer;
             SequencePosition consumed;
             SequencePosition examined;
-            try
-            {
-                ProcessBuffer(in readBuffer, out consumed, out examined);
-            }
-            finally
-            {
-                reader.AdvanceTo(consumed, examined);
-            }
+            //try
+            //{
+            //    ProcessBuffer(in readBuffer, out consumed, out examined);
+            //}
+            //finally
+            //{
+            //    reader.AdvanceTo(consumed, examined);
+            //}
         }
 
         private static void ProcessBuffer(in ReadOnlySequence<byte> sequence, out SequencePosition consumed, out SequencePosition examined)
@@ -123,18 +123,18 @@ namespace CoreCLR.Pipelines
             //...
         }
 
-        private static void ProcessWithBufferReader(in ReadOnlySequence<byte> sequence, out SequencePosition consumed, out SequencePosition examined)
-        {
-            var byteReader = BufferReader.Create(sequence);
-            while (!byteReader.End)
-            {
-                byteReader.Read();
-                // Consume...
+        //private static void ProcessWithBufferReader(in ReadOnlySequence<byte> sequence, out SequencePosition consumed, out SequencePosition examined)
+        //{
+        //    var byteReader = BufferReader.Create(sequence);
+        //    while (!byteReader.End)
+        //    {
+        //        byteReader.Read();
+        //        // Consume...
 
-                consumed = byteReader.Position;
-                examined = byteReader.Position; // or less if Peek was used
-            }
-        }
+        //        consumed = byteReader.Position;
+        //        examined = byteReader.Position; // or less if Peek was used
+        //    }
+        //}
     }
 
     static class ArrayExtensions

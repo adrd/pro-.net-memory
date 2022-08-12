@@ -15,7 +15,7 @@ namespace CoreCLR.GCApi
     {
         static void Main(string[] arguments)
         {
-            /*
+
             bool isServerGC = GCSettings.IsServerGC;
             int pointerSize = IntPtr.Size;
             int numberProcs = Environment.ProcessorCount;
@@ -32,7 +32,7 @@ namespace CoreCLR.GCApi
             GC.Collect(1);
             Console.WriteLine($"{GC.CollectionCount(0)} {GC.CollectionCount(1)} {GC.CollectionCount(2)}");
             GC.Collect(2);
-            Console.WriteLine($"{GC.CollectionCount(0)} {GC.CollectionCount(1)} {GC.CollectionCount(2)}");*/
+            Console.WriteLine($"{GC.CollectionCount(0)} {GC.CollectionCount(1)} {GC.CollectionCount(2)}");
 
             // Listing 15-6
             Console.WriteLine("Hello world!");
@@ -41,9 +41,9 @@ namespace CoreCLR.GCApi
             Console.WriteLine($"{process.WorkingSet64:N0}");
             Console.WriteLine($"{process.VirtualMemorySize64:N0}");
             Console.WriteLine($"{GC.GetTotalMemory(true):N0}");
-            //Console.WriteLine(process.PagedMemorySize64 / 1024);
-            //Console.WriteLine(process.PagedSystemMemorySize64 / 1024);
-            //Console.WriteLine(process.NonpagedSystemMemorySize64 / 1024);
+            Console.WriteLine(process.PagedMemorySize64 / 1024);
+            Console.WriteLine(process.PagedSystemMemorySize64 / 1024);
+            Console.WriteLine(process.NonpagedSystemMemorySize64 / 1024);
             Console.ReadLine();
             //GC.Collect();
             //Console.ReadLine();
@@ -64,7 +64,7 @@ namespace CoreCLR.GCApi
                 var mi = typeof(MemoryFailPoint).GetMethod("GetMemorySettings", BindingFlags.Static | BindingFlags.NonPublic);
                 mi.Invoke(null, args);
             }
-
+             */
             // Listing 15-14
             try
             {
@@ -78,7 +78,7 @@ namespace CoreCLR.GCApi
                 Console.WriteLine(e);
                 throw;
             }
-            */
+           
             {
                 // Region 15-13
                 GC.RegisterForFullGCNotification(10, 10);
